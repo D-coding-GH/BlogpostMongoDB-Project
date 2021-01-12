@@ -1,0 +1,82 @@
+body{
+    background-color: rgb(89, 167, 167);
+}
+
+nav{
+    background-color: rgb(107, 107, 153);
+  
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    justify-content: flex-end;
+    
+}
+
+nav li {
+    list-style: none;
+    padding: 5px 8px;
+    font-weight: bold;
+}
+
+nav li a{
+    color: white;
+}
+
+#li{
+    list-style: none;
+}
+
+.buttonUS{
+    display: flex;
+    justify-content: space-evenly;
+    justify-content:center;
+    
+    padding: 5px 8px;
+
+}
+
+
+.containerlogin{
+
+    
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 5px 8px;
+
+
+
+}
+
+.container-sm{
+    display: flex;
+    justify-content: space-evenly;
+    justify-content: center;
+    flex-direction: row;
+    padding: 5px 8px;
+}
+
+.profilebuttons{
+    display: flex;
+    justify-content:space-between;
+    justify-content: center;
+    flex-direction: row;
+    padding: 5px 8px;
+    
+}
+
+#bMargin{
+    padding: 5px 8px;
+    margin: 5px 8px;
+}
+
+#update{
+    padding-top: 60px;
+}
+
+#allUB{
+    padding: 5px 8px;
+    margin: 5px 8px;
+}
