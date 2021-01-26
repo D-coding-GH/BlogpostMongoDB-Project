@@ -8,16 +8,18 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Create Blog Post</h1>
+    {{>nav}}
+    <h1 class="display-5" >Create Post</h1>
+
 <div class="container-sm">
 
     <div class="mb-3">
         <form action="/blogpost" method="post">
 
-            <label>post title</label>
+            <label>TITLE</label>
             <input type="text" name="postTitle"><br />
 
-            <label>post body</label>
+            <label>BODY</label>
 
             <textarea id="body" class="text" cols="86" rows="20" name="postBody"></textarea>
 

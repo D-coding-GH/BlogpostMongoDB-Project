@@ -8,11 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>user blog posts</h1>
+{{>nav}}
+    <h1 class="display-5" >All User Blog Posts</h1>
    
 
 {{#each allPosts}}
-<div class="card text-center">
+<div class="card text-center" id="blogpost" >
     <div class="card-header">
         blog posts
     </div>
