@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
 
+
+
+
 exports.isLoggedIn = async (req, res, next) => {
 
     if (req.cookies.jwt) {
@@ -16,9 +19,16 @@ exports.isLoggedIn = async (req, res, next) => {
 
         req.userFound = await User.findById(decoded.id)
         console.log(req.userFound)
+        
+        
+    
+       
     }
+    
+    
 
     next()
+    
 }
 
 
@@ -30,3 +40,5 @@ exports.logout = (req,res,next) => {
         });
     next()
 }
+
+

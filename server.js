@@ -6,16 +6,13 @@ const dotenv = require("dotenv");
 const path = require('path')
 const User = require('./models/userModel');
 const hbs = require('hbs');
-
 const Blogpost = require('./models/blogpostModel');
-
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-
 const auth = require('./middlewares/auth');
 
-
+let authenticated = false;
 
 const app = express();
 dotenv.config({ path:'./.env' });
@@ -42,8 +39,15 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json({extended: false}));
 app.use(cookieParser());
 
-app.get('/', (req, res ) => { 
-    res.render('index');
+app.get('/', async (req, res ) => { 
+
+    const allPosts = await Blogpost.aggregate([{$sample:{size:4}}])
+    ///........render blog post and user info to the page..
+    console.log(allPosts)
+    
+    res.render('index',{
+        allPosts:allPosts
+    });
 });
 
 
@@ -176,15 +180,25 @@ app.get("/profile", auth.isLoggedIn, async (req, res) => {
    
     if (req.userFound && req.userFound.admin) {
         const userDB = req.userFound; 
+        
         console.log(req.userFound)
         res.render("adminProfile",{
+            
             user: userDB,
+           
+          
+
+            
+            
         })
     } else if (req.userFound) {
         const userDB = req.userFound; 
         console.log(userDB);
         res.render("profile", {
+          
             user: userDB,
+            
+           
         });
     } else {
         res.redirect("login");
@@ -195,7 +209,7 @@ app.get("/profile", auth.isLoggedIn, async (req, res) => {
 
 
 app.get("/allUsers", (req, res)=> {
-    res.render("allUsers")
+res.render("allUsers")
 
 })
 
@@ -203,12 +217,13 @@ app.post('/allUsers', async (req, res) => {
 
         
         const usersDB = await User.find({})
-
+    
         console.log(usersDB)
         res.render('allUsers',{ 
+            
             users:usersDB 
         })
-
+       
 })
 
 app.post("/delete/:id", auth.isLoggedIn, async (req, res) => {
@@ -367,8 +382,10 @@ app.post('/blogpost',  auth.isLoggedIn, async (req,res) => {
         userid: userId,
         
     });
-    
-   res.send("blog updated")
+   const message = "blog updated"
+   res.render("allPosts", {
+    message:message,
+   })
       
    
 })
@@ -421,7 +438,7 @@ app.post("/changePost/:id", auth.isLoggedIn, async (req, res) => {
 
 
 
-  //.....delete blog route need creating and installing  
+  //.....delete blog route needs creating and installing  
 
 
 
@@ -431,7 +448,7 @@ app.post("/delete", auth.isLoggedIn, async (req,res) =>{//......render homepage 
 
     const message = "profile DELETED";
 
-    res.render('update', {
+    res.render('index', {
         
         message:message
     })
@@ -441,10 +458,15 @@ app.post("/delete", auth.isLoggedIn, async (req,res) =>{//......render homepage 
 
 app.get("/logout", auth.logout, (req,res) => {
 
-    res.send("you are logged out")
- 
-    
-    }) 
+    const message = "see you again soon";
+
+    res.render("index",{
+        message:message
+    })
+
+
+
+  }) 
 
 
 app.listen(5500, () => {
