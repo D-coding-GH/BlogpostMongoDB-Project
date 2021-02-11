@@ -1,3 +1,5 @@
+//.....middleware, authentication create cookies during login/user registration
+
 const { promisify } = require("util");
 
 const jwt = require('jsonwebtoken');
@@ -19,25 +21,20 @@ exports.isLoggedIn = async (req, res, next) => {
 
         req.userFound = await User.findById(decoded.id)
         console.log(req.userFound)
-        
-        
-    
-       
     }
-    
-    
 
     next()
-    
+
 }
 
 
-exports.logout = (req,res,next) => {
+exports.logout = (req, res, next) => {
 
-    res.cookie('jwt','logout', {
-        expires: new Date( Date.now() + 2*1000),
+    res.cookie('jwt', 'logout', {
+        expires: new Date(Date.now() + 2 * 1000),
         httpOnly: true
-        });
+    });
+    
     next()
 }
 
